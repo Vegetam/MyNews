@@ -1,5 +1,6 @@
 package com.francescomalagrino.mynews.Controllers.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +18,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.francescomalagrino.mynews.Models.News;
+import com.francescomalagrino.mynews.Controllers.Activities.DetailActivity;
 import com.francescomalagrino.mynews.R;
-import com.francescomalagrino.mynews.Utils.JSONQueryParser;
 import com.francescomalagrino.mynews.views.TopStoryAdapter;
 import com.francescomalagrino.mynews.views.TopStoryViewModel;
 
 import org.json.JSONException;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TopStoryFragment extends Fragment {
     //the URL having the json data
@@ -35,6 +34,8 @@ public class TopStoryFragment extends Fragment {
     // private List<News> mNewsList;
     private TopStoryAdapter mTopStoryAdapter;
     private TopStoryViewModel mTopStoryViewModel;
+
+    public static final String URL = "URL";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,8 @@ public class TopStoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_top_story, container, false);
         final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        openDetailActivity("https://www.nytimes.com/2022/05/28/us/politics/gun-laws-senate-uvalde-buffalo.html");
+
         //LiveData Observer
         mTopStoryViewModel.getList().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
             @Override
@@ -88,5 +91,12 @@ public class TopStoryFragment extends Fragment {
         });
 
         return root;
+    }
+
+
+    private void openDetailActivity(String url){
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(URL,url);
+        startActivity(intent);
     }
 }

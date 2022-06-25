@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.francescomalagrino.mynews.Controllers.Activities.WebViewActivity;
-import com.francescomalagrino.mynews.Models.News;
 import com.francescomalagrino.mynews.R;
 import com.squareup.picasso.Picasso;
 

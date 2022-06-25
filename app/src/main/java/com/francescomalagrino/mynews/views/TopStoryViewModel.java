@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.francescomalagrino.mynews.Models.News;
-
 import java.util.List;
 
 public class TopStoryViewModel extends ViewModel {
