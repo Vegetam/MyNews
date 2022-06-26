@@ -1,20 +1,19 @@
 package com.francescomalagrino.mynews.Utils;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
-import android.annotation.SuppressLint;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.francescomalagrino.mynews.BuildConfig;
 import com.francescomalagrino.mynews.Controllers.Activities.MainActivity;
+import com.francescomalagrino.mynews.BuildConfig;
 import com.francescomalagrino.mynews.Models.Search.ArticleSearchResponse;
 import com.francescomalagrino.mynews.R;
 import com.francescomalagrino.mynews.api.Retrofit2Helper;
@@ -31,7 +30,12 @@ import retrofit2.Response;
 
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Context.MODE_PRIVATE;
+import static com.francescomalagrino.mynews.Controllers.Activities.NotificationsActivity.NY_PREFS_NAME;
 
+
+/**
+ * Created by Mutwakil Mo on
+ */
 public class NotificationsNewsReceiver extends BroadcastReceiver {
 
     private Retrofit2Helper mRetrofit2Helper = Retrofit2Helper.retrofit.create(Retrofit2Helper.class);
@@ -92,7 +96,6 @@ public class NotificationsNewsReceiver extends BroadcastReceiver {
                 @Override
                 public void onResponse(@NonNull Call<ArticleSearchResponse> call, @NonNull Response<ArticleSearchResponse> response) {
                     ArticleSearchResponse articles = response.body();
-                  //  com.francescomalagrino.mynews.Models.Search.Response theListOfArticles = Objects.requireNonNull(articles).getResponse();
                     com.francescomalagrino.mynews.Models.Search.Response theListOfArticles = Objects.requireNonNull(articles).getResponse();
                     if (theListOfArticles.getDocs().size() != 0) {
                         if (Build.VERSION.SDK_INT <= 25) {

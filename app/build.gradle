@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
     }
 
@@ -69,5 +70,8 @@ dependencies {
 
     //Android ImageViews animated by Ken Burns Effect
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    //multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
+
 
 }

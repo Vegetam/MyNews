@@ -48,7 +48,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
 
     @NonNull
     @Override
-    public MostPopularAdapter.NewsItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewsItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_news, parent, false);
@@ -56,7 +56,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MostPopularAdapter.NewsItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsItemViewHolder holder, int position) {
 
         NYMostPopularResult nyMostPopularResult = nyMostPopularResults.get(position);
 

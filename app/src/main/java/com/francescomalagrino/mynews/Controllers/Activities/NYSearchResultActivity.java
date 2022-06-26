@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.francescomalagrino.mynews.Utils.ListItem;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.francescomalagrino.mynews.Models.Search.ArticleSearchResponse;
 import com.francescomalagrino.mynews.views.NewsAdapter;
 import com.francescomalagrino.mynews.R;
@@ -32,6 +30,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 public class NYSearchResultActivity extends AppCompatActivity {
 
     @BindView(R.id.noResultsTV)

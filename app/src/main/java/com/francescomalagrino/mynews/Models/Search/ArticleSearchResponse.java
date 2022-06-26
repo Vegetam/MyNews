@@ -2,7 +2,6 @@ package com.francescomalagrino.mynews.Models.Search;
 
 import com.google.gson.annotations.SerializedName;
 
-import retrofit2.Response;
 
 public class ArticleSearchResponse {
     @SerializedName("copyright")
@@ -15,32 +14,32 @@ public class ArticleSearchResponse {
     private String status;
 
 
-    public void setCopyright(String copyright) {
+    public void setCopyright(String copyright){
         this.copyright = copyright;
     }
 
-    public String getCopyright() {
+    public String getCopyright(){
         return copyright;
     }
 
-    public void setResponse(Response response) {
+    public void setResponse(Response response){
         this.response = response;
     }
 
-    public com.francescomalagrino.mynews.Models.Search.Response getResponse() {
+    public Response getResponse(){
         return response;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(String status){
         this.status = status;
     }
 
-    public String getStatus() {
+    public String getStatus(){
         return status;
     }
 
     @Override
-    public String toString() {
+    public String toString(){
         return
                 "ArticleSearchResponse{" +
                         "copyright = '" + copyright + '\'' +

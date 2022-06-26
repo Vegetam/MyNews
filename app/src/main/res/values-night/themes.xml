@@ -43,7 +43,6 @@
         <item name="stSolidBackground">true</item>
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">#3cff00</item>
-        <item name="stIconStart">@drawable/ic_launcher_web</item>
         <item name="stLength">SHORT</item>
         <item name="stRadius">45dp</item>
     </style>
