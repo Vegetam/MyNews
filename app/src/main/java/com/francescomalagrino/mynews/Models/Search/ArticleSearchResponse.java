@@ -27,7 +27,7 @@ public class ArticleSearchResponse {
         this.response = response;
     }
 
-    public Response getResponse() {
+    public com.francescomalagrino.mynews.Models.Search.Response getResponse() {
         return response;
     }
 
