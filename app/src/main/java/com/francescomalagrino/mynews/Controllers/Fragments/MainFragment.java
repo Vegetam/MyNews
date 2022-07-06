@@ -24,7 +24,7 @@ import com.francescomalagrino.mynews.Models.New_York_Times_Top_Stories.TopStorie
 import com.francescomalagrino.mynews.R;
 import com.francescomalagrino.mynews.Utils.Constant;
 import com.francescomalagrino.mynews.api.Retrofit2Helper;
-
+import com.francescomalagrino.mynews.repository.NewsRepo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class MainFragment extends Fragment {
     private MostPopularAdapter mMostPopularAdapter;
     private List<NYMostPopularResult> mNYMostPopularResults = new ArrayList<>();
     private List<TopStoriesResultsItem> mTopStoriesResultsItems = new ArrayList<>();
-    private Retrofit2Helper mRetrofit2Helper = Retrofit2Helper.retrofit.create(Retrofit2Helper.class);
+    private NewsRepo newsRepo = new NewsRepo();
 
     public MainFragment() {
         // Required empty public constructor
@@ -101,57 +101,11 @@ public class MainFragment extends Fragment {
 
 
     public void callTopStories(String section) {
-        Call<TopStoriesResponse> topStoriesResponseCall;
-        switch (section) {
-            case "Technology":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("technology", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Business":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("business", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Sports":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("sports", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Travel":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("travel", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Fashion":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("fashion", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Science":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("science", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Automobiles":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("automobiles", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Politics":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("politics", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Arts":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("arts", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "World":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("world", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Health":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("health", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Food":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("food", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Movies":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("movies", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Books":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("books", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "RealEstate":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("realestate", BuildConfig.MY_NYT_API_KEY);
-                break;
 
-            default:
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("home", BuildConfig.MY_NYT_API_KEY);
-        }
+        Call<TopStoriesResponse> topStoriesResponseCall;
+
+     //   String defaultSelection = "Frank";
+        topStoriesResponseCall = newsRepo.callTopStories(section);
 
         topStoriesResponseCall.enqueue(new Callback<TopStoriesResponse>() {
             @Override
@@ -179,7 +133,7 @@ public class MainFragment extends Fragment {
     }
 
     public void callMostPopular() {
-        Call<NYMostPopularResponse> nyMostPopularResponseCall = mRetrofit2Helper.getNYMostPopular(7, BuildConfig.MY_NYT_API_KEY);
+        Call<NYMostPopularResponse> nyMostPopularResponseCall = newsRepo.mostPopular();
         nyMostPopularResponseCall.enqueue(new Callback<NYMostPopularResponse>() {
             @Override
             public void onResponse(Call<NYMostPopularResponse> call, Response<NYMostPopularResponse> response) {

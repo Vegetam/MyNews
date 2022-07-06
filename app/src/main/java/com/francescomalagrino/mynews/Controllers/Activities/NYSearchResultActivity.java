@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.francescomalagrino.mynews.Utils.ListItem;
 import com.francescomalagrino.mynews.Models.Search.ArticleSearchResponse;
+import com.francescomalagrino.mynews.repository.NewsRepo;
 import com.francescomalagrino.mynews.views.NewsAdapter;
 import com.francescomalagrino.mynews.R;
 import com.francescomalagrino.mynews.api.Retrofit2Helper;
@@ -40,8 +41,10 @@ public class NYSearchResultActivity extends AppCompatActivity {
 
     private NewsAdapter mAdapter;
     private List<ListItem> listItems;
+    private NewsRepo newsRepo = new NewsRepo();
 
-    private Retrofit2Helper mRetrofit2Helper = Retrofit2Helper.retrofit.create(Retrofit2Helper.class);
+
+    //  private Retrofit2Helper mRetrofit2Helper = Retrofit2Helper.retrofit.create(Retrofit2Helper.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class NYSearchResultActivity extends AppCompatActivity {
             mAdapter = new NewsAdapter(listItems, NYSearchResultActivity.this);
 
             Call<ArticleSearchResponse> call;
-            call = mRetrofit2Helper.getArticleSearch(searchQuery, Objects.requireNonNull(categoriesSelected).toString().replace("[", "").replace("]", ""), theBeginDateString, theEndDateString, "FAPKrODFWcdFsvvfOBe8huf5SCc0NnBP");
+            call = newsRepo.searchNY();
             Toast.makeText(this, searchQuery, Toast.LENGTH_SHORT).show();
             recyclerView.setAdapter(mAdapter);
             if (call != null) {

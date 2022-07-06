@@ -26,8 +26,40 @@ public interface Retrofit2Helper {
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(logging).build();
 
+    /*
+     OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .addInterceptor(new Interceptor() {
+                @NotNull
+                @Override
+                public Response intercept(@NotNull Chain chain) throws IOException {
+                    Request request = chain.request().newBuilder().addHeader("api-key", "2xZKLpH8Dz2DvNNhHJgZP4Dc2ZN3dbjf").build();
 
+                    return chain.proceed(request);
+                }
+            }).build();
 
+    final static String API_KEY_IDENTIFIER = "api-key";
+
+    default OkHttpClient getHttpClient(){
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+                HttpUrl originalUrl = original.url();
+                HttpUrl url = originalUrl.newBuilder()
+                        .addQueryParameter(API_KEY_IDENTIFIER, BuildConfig.MY_NYT_API_KEY)
+                        .build();
+                Request.Builder requestBuilder = original.newBuilder().url(url);
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        });
+        return httpClient.build();
+    }
+
+     */
+    
     //Retrofit Instance
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(NEW_YORK_TIMES_URL)
