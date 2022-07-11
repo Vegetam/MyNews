@@ -48,6 +48,16 @@
         </activity>
 
         <activity
+            android:name="com.francescomalagrino.mynews.Controllers.Activities.AboutActivity"
+            android:parentActivityName="com.francescomalagrino.mynews.Controllers.Activities.MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.francescomalagrino.mynews.Controllers.Activities.MainActivity" />
+        </activity>
+
+        <activity
             android:name="com.francescomalagrino.mynews.Controllers.Activities.NewYorkTimesWebViewActivity"
             android:parentActivityName="com.francescomalagrino.mynews.Controllers.Activities.MainActivity" />
         <activity

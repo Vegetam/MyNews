@@ -145,6 +145,12 @@ public class MainActivity extends AppCompatActivity
 
                 helpActivity();
                 break;
+                case R.id.action_about:
+                //Toast.makeText(this, "Action", Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(this, "About MyNews app", R.style.mytoast).show();
+
+                aboutActivity();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -327,6 +333,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // -------------------------
+    // CONFIGURATION AboutActivity
+    // -------------------------
+    private void aboutActivity() {
+        Intent about = new Intent(MainActivity.this, AboutActivity.class);
+        startActivity(about);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        Log.d(TAG_LOG_MAIN, "aboutActivity: OpenAboutActivity");
+    }
 
     // -------------------------
     // CONFIGURATION HelpActivity
