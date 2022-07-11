@@ -94,9 +94,4 @@ public class MainActivityTest {
 
     }
 
-    @Test
-    public void testNavigationDrawer(){
-        onView(withId(R.id.drawer_layout)).perform();
-    }
-
 }
