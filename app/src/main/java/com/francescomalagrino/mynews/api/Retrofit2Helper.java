@@ -5,7 +5,15 @@ import com.francescomalagrino.mynews.Models.New_York_Times_Most_Popular.NYMostPo
 import com.francescomalagrino.mynews.Models.New_York_Times_Top_Stories.TopStoriesResponse;
 import com.francescomalagrino.mynews.Models.Search.ArticleSearchResponse;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -23,24 +31,16 @@ public interface Retrofit2Helper {
     /*Ok HttpLoggingInterceptor*/
 
     HttpLoggingInterceptor logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+
+
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(logging).build();
 
-    /*
-     OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .addInterceptor(new Interceptor() {
-                @NotNull
-                @Override
-                public Response intercept(@NotNull Chain chain) throws IOException {
-                    Request request = chain.request().newBuilder().addHeader("api-key", "2xZKLpH8Dz2DvNNhHJgZP4Dc2ZN3dbjf").build();
 
-                    return chain.proceed(request);
-                }
-            }).build();
 
     final static String API_KEY_IDENTIFIER = "api-key";
 
-    default OkHttpClient getHttpClient(){
+    static OkHttpClient getHttpClient(){
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -55,22 +55,22 @@ public interface Retrofit2Helper {
                 return chain.proceed(request);
             }
         });
+        httpClient.addInterceptor(logging);
         return httpClient.build();
     }
 
-     */
+
     
     //Retrofit Instance
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(NEW_YORK_TIMES_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
+            .client(getHttpClient())
             .build();
 
     @GET("mostpopular/v2/viewed/{period}.json")
     Call<NYMostPopularResponse> getNYMostPopular(
-            @Path("period") int PERIOD,
-            @Query("api-key") String API_KEY
+            @Path("period") int PERIOD
     );
 
     /*--------------------
@@ -80,8 +80,7 @@ public interface Retrofit2Helper {
 
     @GET("topstories/v2/{section}.json")
     Call<TopStoriesResponse> getNYTopStories(
-            @Path("section") String SECTION,
-            @Query("api-key") String API_KEY
+            @Path("section") String SECTION
     );
 
 
@@ -96,7 +95,6 @@ public interface Retrofit2Helper {
             @Query("q") String QUERY,
             @Query("fq") String FILTER,
             @Query("begin_date") String BEGIN_DATE,
-            @Query("end_date") String END_DATE,
-            @Query("api-key") String API_KEY
+            @Query("end_date") String END_DATE
     );
 }

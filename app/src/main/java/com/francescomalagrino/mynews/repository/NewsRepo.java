@@ -1,90 +1,107 @@
 package com.francescomalagrino.mynews.repository;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.francescomalagrino.mynews.BuildConfig;
 import com.francescomalagrino.mynews.Models.New_York_Times_Most_Popular.NYMostPopularResponse;
+import com.francescomalagrino.mynews.Models.New_York_Times_Most_Popular.NYMostPopularResult;
 import com.francescomalagrino.mynews.Models.New_York_Times_Top_Stories.TopStoriesResponse;
+import com.francescomalagrino.mynews.Models.New_York_Times_Top_Stories.TopStoriesResultsItem;
 import com.francescomalagrino.mynews.Models.Search.ArticleSearchResponse;
+import com.francescomalagrino.mynews.Models.Search.DocsItem;
 import com.francescomalagrino.mynews.api.Retrofit2Helper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewsRepo {
     private Retrofit2Helper mRetrofit2Helper = Retrofit2Helper.retrofit.create(Retrofit2Helper.class);
 
-    public Call<TopStoriesResponse> callTopStories(String section) {
-        Call<TopStoriesResponse> topStoriesResponseCall;
-        switch (section) {
-            case "Technology":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("technology", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Business":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("business", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Sports":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("sports", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Travel":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("travel", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Fashion":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("fashion", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Science":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("science", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Automobiles":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("automobiles", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Politics":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("politics", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Arts":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("arts", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "World":
-                topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("world", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Health":
-                  topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("health", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Food":
-                  topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("food", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Movies":
-                 topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("movies", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "Books":
-                 topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("books", BuildConfig.MY_NYT_API_KEY);
-                break;
-            case "RealEstate":
-                 topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("realestate", BuildConfig.MY_NYT_API_KEY);
-                break;
+    public LiveData<List<TopStoriesResultsItem>> callTopStories(String section) {
+        MutableLiveData<List<TopStoriesResultsItem>> result = new MutableLiveData<>();
+        Call<TopStoriesResponse> topStoriesResponseCall = mRetrofit2Helper.getNYTopStories(section.toLowerCase());
 
-            default:
-                 topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("home", BuildConfig.MY_NYT_API_KEY);
-        }
+           if(section == "Top Stories") {
+               topStoriesResponseCall = mRetrofit2Helper.getNYTopStories("home");
+           }
 
 
-        return topStoriesResponseCall;
+         topStoriesResponseCall.enqueue(new Callback<TopStoriesResponse>() {
+            @Override
+            public void onResponse(Call<TopStoriesResponse> call, Response<TopStoriesResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    result.postValue(response.body().getResults());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TopStoriesResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+
+        return result;
     }
 
-    public Call<ArticleSearchResponse> searchNY() {
+    public LiveData<List<DocsItem>> searchNY(String searchQuery, String theBeginDateString, String theEndDateString, ArrayList<String> categoriesSelected) {
+        MutableLiveData<List<DocsItem>> result = new MutableLiveData<>();
+        Call<ArticleSearchResponse> call = mRetrofit2Helper.getArticleSearch(searchQuery, Objects.requireNonNull(categoriesSelected).toString().replace("[", "").replace("]", ""), theBeginDateString, theEndDateString);
 
 
-        String searchQuery = "";
-        String theBeginDateString = null;
-        String theEndDateString = null;
-        ArrayList<String> categoriesSelected = null;
+        call.enqueue(new Callback<ArticleSearchResponse>() {
 
-        return mRetrofit2Helper.getArticleSearch(searchQuery, Objects.requireNonNull(categoriesSelected).toString().replace("[", "").replace("]", ""), theBeginDateString, theEndDateString, BuildConfig.MY_NYT_API_KEY);
 
+            @Override
+            public void onResponse(Call<ArticleSearchResponse> call, Response<ArticleSearchResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    result.postValue(response.body().getResponse().getDocs());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleSearchResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return result;
     }
 
-    public  Call<NYMostPopularResponse> mostPopular(){
-        return mRetrofit2Helper.getNYMostPopular(7, BuildConfig.MY_NYT_API_KEY);
+    public LiveData<List<NYMostPopularResult>> mostPopular() {
+        MutableLiveData<List<NYMostPopularResult>> result = new MutableLiveData<>();
+        Call<NYMostPopularResponse> nyMostPopularResponseCall = mRetrofit2Helper.getNYMostPopular(7);
+
+
+
+        nyMostPopularResponseCall.enqueue(new Callback<NYMostPopularResponse>() {
+            @Override
+            public void onResponse(Call<NYMostPopularResponse> call, Response<NYMostPopularResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    result.postValue(response.body().getResults());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<NYMostPopularResponse> call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+
+        return result;
     }
+
+
 
     }

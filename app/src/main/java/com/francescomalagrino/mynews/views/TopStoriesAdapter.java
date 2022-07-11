@@ -1,4 +1,4 @@
-package com.francescomalagrino.mynews.views;;
+package com.francescomalagrino.mynews.views;
 
 import android.content.Context;
 import android.content.Intent;

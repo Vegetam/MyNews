@@ -78,4 +78,21 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     testImplementation "org.mockito:mockito-core:2.28.2"
+
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "MyNews"
+        property "sonar.projectKey", "MyNews"
+        property "sonar.tests", ["src/test/java"]
+        property "sonar.test.inclusions", "**/*Test*/**"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.sources", "src/main/java"
+        property "sonar.exclusions", '**/*Test*/**,' +
+                '*.json,' +
+                '**/*test*/**,' +
+                '**/.gradle/**,' +
+                '**/R.class'
+    }
 }

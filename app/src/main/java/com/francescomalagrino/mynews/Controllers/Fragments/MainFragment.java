@@ -102,65 +102,22 @@ public class MainFragment extends Fragment {
 
     public void callTopStories(String section) {
 
-        Call<TopStoriesResponse> topStoriesResponseCall;
-
      //   String defaultSelection = "Frank";
-        topStoriesResponseCall = newsRepo.callTopStories(section);
-
-        topStoriesResponseCall.enqueue(new Callback<TopStoriesResponse>() {
-            @Override
-            public void onResponse(Call<TopStoriesResponse> call, Response<TopStoriesResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // -------------------
-                    // UPDATE UI
-                    // -------------------
-                    mTopStoriesResultsItems.addAll(response.body().getResults());
-                    mTopStoriesAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
-                    // stop animating Shimmer and hide the layout
-//                    mShimmerViewContainer.stopShimmer();
-//                    mShimmerViewContainer.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<TopStoriesResponse> call, Throwable t) {
-                Log.d("ERROR", t.getMessage());
-                t.printStackTrace();
-            }
+        newsRepo.callTopStories(section).observe(getViewLifecycleOwner(),topStoriesResultsItems -> {
+            mTopStoriesResultsItems.addAll(topStoriesResultsItems);
+                mTopStoriesAdapter.notifyDataSetChanged();
+              swipeRefreshLayout.setRefreshing(false);
         });
     }
 
     public void callMostPopular() {
-        Call<NYMostPopularResponse> nyMostPopularResponseCall = newsRepo.mostPopular();
-        nyMostPopularResponseCall.enqueue(new Callback<NYMostPopularResponse>() {
-            @Override
-            public void onResponse(Call<NYMostPopularResponse> call, Response<NYMostPopularResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    mNYMostPopularResults.clear();
-                    // -------------------
-                    // UPDATE UI
-                    // -------------------
-                    mNYMostPopularResults.addAll(response.body().getResults());
-                    mMostPopularAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
+        newsRepo.mostPopular().observe(getViewLifecycleOwner(),nyMostPopularResults -> {
+            mNYMostPopularResults.clear();
+            mNYMostPopularResults.addAll(nyMostPopularResults);
+            mMostPopularAdapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
 
-                    // stop animating Shimmer and hide the layout
-//                    mShimmerViewContainer.stopShimmer();
-//                    mShimmerViewContainer.setVisibility(View.GONE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<NYMostPopularResponse> call, Throwable t) {
-                Log.d("ERROR", t.getMessage());
-                t.printStackTrace();
-            }
         });
-
 
     }
 

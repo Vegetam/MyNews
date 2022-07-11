@@ -87,7 +87,7 @@ public class NotificationsNewsReceiver extends BroadcastReceiver {
         Call<ArticleSearchResponse> call;
         call = mRetrofit2Helper.getArticleSearch(searchQuery, categoriesCBSelected.toString()
                         .replace("[", "").replace("]", ""),
-                dateFormat.format(date), null, BuildConfig.MY_NYT_API_KEY);
+                dateFormat.format(date), null);
 
         if (call != null) {
             call.enqueue(new Callback<ArticleSearchResponse>() {

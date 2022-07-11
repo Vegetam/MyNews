@@ -73,79 +73,55 @@ public class NYSearchResultActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(NYSearchResultActivity.this));
             listItems = new ArrayList<>();
             mAdapter = new NewsAdapter(listItems, NYSearchResultActivity.this);
-
-            Call<ArticleSearchResponse> call;
-            call = newsRepo.searchNY();
             Toast.makeText(this, searchQuery, Toast.LENGTH_SHORT).show();
             recyclerView.setAdapter(mAdapter);
-            if (call != null) {
-                call.enqueue(new Callback<ArticleSearchResponse>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onResponse(@NonNull Call<ArticleSearchResponse> call, @NonNull Response<ArticleSearchResponse> response) {
-                        ArticleSearchResponse articles = response.body();
-                        com.francescomalagrino.mynews.Models.Search.Response theListOfArticles = Objects.requireNonNull(articles).getResponse();
+            newsRepo.searchNY(searchQuery,theBeginDateString,theEndDateString,categoriesSelected).observe(this, docsItems -> {
+                for (int i = 0; i < docsItems.size(); i++) {
 
-                        if (theListOfArticles != null) {
-
-                            for (int i = 0; i < theListOfArticles.getDocs().size(); i++) {
-
-                                @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
-                                String inputDateStr = theListOfArticles.getDocs().get(i).getPubDate();
-                                if (inputDateStr == null) {
-                                    inputDateStr = "";
-                                }
-
-                                Date date = null;
-                                try {
-                                    date = inputFormat.parse(inputDateStr);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                String outputDateStr = outputFormat.format(date);
-
-                                if (theListOfArticles.getDocs().get(i).getMultimedia().size() != 0) {
-                                    ListItem listItem = new ListItem("",
-                                            "",
-                                            theListOfArticles.getDocs().get(i).getSnippet(),
-                                            outputDateStr,
-                                            theListOfArticles.getDocs().get(i).getMultimedia().get(0).getUrl(),
-                                            theListOfArticles.getDocs().get(i).getWebUrl(),
-                                            NYSearchResultActivity.this);
-
-                                    listItems.add(listItem);
-                                } else {
-                                    ListItem listItem = new ListItem("",
-                                            "",
-                                            theListOfArticles.getDocs().get(i).getSnippet(),
-                                            outputDateStr,
-                                            "".replace("https://", "http://"),
-                                            theListOfArticles.getDocs().get(i).getWebUrl(),
-                                            NYSearchResultActivity.this);
-                                    listItems.add(listItem);
-
-                                }
-                            }
-                        }
-                        if (Objects.requireNonNull(theListOfArticles).getDocs().size() == 0) {
-                            noResultsTV.setText("No articles matching your search. Try being less specific");
-                        } else {
-                            noResultsTV.setText("");
-                        }
-                        mAdapter.notifyDataSetChanged();
-
+                    @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    String inputDateStr = docsItems.get(i).getPubDate();
+                    if (inputDateStr == null) {
+                        inputDateStr = "";
                     }
 
-                    @Override
-                    public void onFailure(@NonNull Call<ArticleSearchResponse> call, @NonNull Throwable t) {
+                    Date date = null;
+                    try {
+                        date = inputFormat.parse(inputDateStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String outputDateStr = outputFormat.format(date);
 
-                        Log.d("JSON", t.getMessage());
+                    if (docsItems.get(i).getMultimedia().size() != 0) {
+                        ListItem listItem = new ListItem("",
+                                "",
+                                docsItems.get(i).getSnippet(),
+                                outputDateStr,
+                                docsItems.get(i).getMultimedia().get(0).getUrl(),
+                                docsItems.get(i).getWebUrl(),
+                                NYSearchResultActivity.this);
+
+                        listItems.add(listItem);
+                    } else {
+                        ListItem listItem = new ListItem("",
+                                "",
+                                docsItems.get(i).getSnippet(),
+                                outputDateStr,
+                                "".replace("https://", "http://"),
+                                docsItems.get(i).getWebUrl(),
+                                NYSearchResultActivity.this);
+                        listItems.add(listItem);
 
                     }
-                });
-            }
-
+                }
+                if (docsItems.size() == 0) {
+                    noResultsTV.setText("No articles matching your search. Try being less specific");
+                } else {
+                    noResultsTV.setText("");
+                }
+                mAdapter.notifyDataSetChanged();
+            });
         }
     }
 

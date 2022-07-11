@@ -49,26 +49,6 @@ public class NotificationsActivityTest {
     private CheckBox cb_travel;
     private Switch notification_switch;
 
-    @Before
-    public void setUp() throws Exception {
-        // ----------------------------------
-        //CategoriesCheckBoxes
-        // ----------------------------------
-
-        cb_arts = mNotificationsActivity.findViewById(R.id.artsCB);
-        cb_politics = mNotificationsActivity.findViewById(R.id.politicsCB);
-        cb_business = mNotificationsActivity.findViewById(R.id.businessCB);
-        cb_sports = mNotificationsActivity.findViewById(R.id.sportsCB);
-        cb_entrepreneurs = mNotificationsActivity.findViewById(R.id.entrepreneursCB);
-        cb_travel = mNotificationsActivity.findViewById(R.id.travelCB);
-
-        //Text
-        EditText textInputEditText = mNotificationsActivity.findViewById(R.id.editTextSearchNotification);
-
-        //Switch notifications
-        notification_switch = mNotificationsActivity.findViewById(R.id.notificationSwitch);
-
-    }
 
     @Test
     public void testViewsDisplayOnActivity() {

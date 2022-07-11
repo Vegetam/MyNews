@@ -60,28 +60,10 @@ public class SearchActivityTest {
     private EditText textInputEditText;
 
 
-    @Before
-    public void setUp() throws Exception {
-
-        cb_arts =  mSearchActivity.findViewById(R.id.artsCB);
-        cb_politics = mSearchActivity.findViewById(R.id.politicsCB);
-        cb_business = mSearchActivity.findViewById(R.id.businessCB);
-        cb_sports = mSearchActivity.findViewById(R.id.sportsCB);
-        cb_entrepreneurs = mSearchActivity.findViewById(R.id.entrepreneursCB);
-        cb_travel = mSearchActivity.findViewById(R.id.travelCB);
-
-
-        textInputEditText = mSearchActivity.findViewById(R.id.editTextSearch);
-
-        //Views (buttons)
-        endDateButton = mSearchActivity.findViewById(R.id.editTextBeginDate);
-        beginDateButton = mSearchActivity.findViewById(R.id.editTextEndDate);
-    }
-
     @Test
     public void testLaunchNYSearchResultActivityOnButtonClicked() {
 
-        assertNotNull(mSearchActivity.findViewById(R.id.searchButton));
+    //    assertNotNull(mSearchActivity.findViewById(R.id.searchButton));
         //perform click on btn using espresso(UI)
         onView(withId(R.id.searchButton)).perform(click());
 
@@ -116,19 +98,19 @@ public class SearchActivityTest {
         onView(withId(R.id.editTextSearch)).perform(clearText());
 
 
-        if (cb_arts.isChecked()) onView(withId(R.id.artsCB)).perform(click());
-        if (cb_business.isChecked()) onView(withId(R.id.businessCB)).perform(click());
-        if (cb_politics.isChecked()) onView(withId(R.id.politicsCB)).perform(click());
-        if (cb_sports.isChecked()) onView(withId(R.id.sportsCB)).perform(click());
-        if (cb_entrepreneurs.isChecked()) onView(withId(R.id.entrepreneursCB)).perform(click());
-        if (cb_travel.isChecked()) onView(withId(R.id.travelCB)).perform(click());
+        onView(withId(R.id.artsCB)).perform(click());
+       onView(withId(R.id.businessCB)).perform(click());
+        onView(withId(R.id.politicsCB)).perform(click());
+         onView(withId(R.id.sportsCB)).perform(click());
+        onView(withId(R.id.entrepreneursCB)).perform(click());
+         onView(withId(R.id.travelCB)).perform(click());
 
         // ------------------------------------------------------------------------------------
         // SearchEditText Writing Hello Search Test from Belgium StayHome StaySafe on the EditText
         // -----------------------------------------------------------------------------------
 
         onView(withId(R.id.editTextSearch))
-                .perform(typeText("Hello Search Test from Belgium StayHome StaySafe"))
+                .perform(typeText("Hello Search Test from Italy StayHome StaySafe"))
                 .check(matches(isDisplayed()));
 
 
@@ -136,22 +118,22 @@ public class SearchActivityTest {
         // Checking the categoriesSelected are checked when clicked
         // --------------------------------------------------------------
 
-        onView(withId(R.id.artsCB)).perform(click()).check(matches(isChecked()));
-        onView(withId(R.id.businessCB)).perform(click()).check(matches(isDisplayed()));
-        onView(withId(R.id.sportsCB)).perform(click()).check(matches(isDisplayed()));
-        onView(withId(R.id.entrepreneursCB)).perform(click()).check(matches(isDisplayed()));
-        onView(withId(R.id.travelCB)).perform(click()).check(matches(isDisplayed()));
+        onView(withId(R.id.artsCB)).check(matches(isChecked()));
+        onView(withId(R.id.businessCB)).check(matches(isDisplayed()));
+        onView(withId(R.id.sportsCB)).check(matches(isDisplayed()));
+        onView(withId(R.id.entrepreneursCB)).check(matches(isDisplayed()));
+        onView(withId(R.id.travelCB)).check(matches(isDisplayed()));
 
         // --------------------------------------------------------------
         // unChecking the categoriesSelected are checked when clicked
         // --------------------------------------------------------------
 
-        if (cb_arts.isChecked()) onView(withId(R.id.artsCB)).perform(click());
-        if (cb_politics.isChecked()) onView(withId(R.id.politicsCB)).perform(click());
-        if (cb_business.isChecked()) onView(withId(R.id.businessCB)).perform(click());
-        if (cb_sports.isChecked()) onView(withId(R.id.sportsCB)).perform(click());
-        if (cb_entrepreneurs.isChecked()) onView(withId(R.id.entrepreneursCB)).perform(click());
-        if (cb_travel.isChecked()) onView(withId(R.id.travelCB)).perform(click());
+         onView(withId(R.id.artsCB)).perform(click());
+         onView(withId(R.id.politicsCB)).perform(click());
+         onView(withId(R.id.businessCB)).perform(click());
+        onView(withId(R.id.sportsCB)).perform(click());
+       onView(withId(R.id.entrepreneursCB)).perform(click());
+        onView(withId(R.id.travelCB)).perform(click());
 
 
     }
@@ -161,7 +143,7 @@ public class SearchActivityTest {
         // Show the date picker
         onView(withId(R.id.editTextBeginDate)).perform(click());
         // Sets a date on the date picker widget
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(1988, 11, 27));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
     }
 
     @Test
@@ -169,7 +151,7 @@ public class SearchActivityTest {
         // Show the date picker
         onView(withId(R.id.editTextEndDate)).perform(click());
         // Sets a date on the date picker widget
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(1988, 11, 27));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
     }
 
 }
