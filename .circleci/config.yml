@@ -12,7 +12,7 @@ jobs:
       - android/create-avd:
           avd-name: myavd
           install: true
-          system-image: system-images;android-31;
+          system-image: system-images;android-29;default;x86
       - android/start-emulator:
           avd-name: myavd
           no-window: true
