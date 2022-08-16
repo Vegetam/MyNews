@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class NewsRepoTest {
     NewsRepo mNewsRepo = new NewsRepo();
-
+/*
     @Mock
     MainFragment mMainFragment;
 
@@ -47,5 +47,5 @@ public class NewsRepoTest {
 
 
     }
-
+*/
 }
