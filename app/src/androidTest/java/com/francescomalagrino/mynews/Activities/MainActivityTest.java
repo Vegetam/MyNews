@@ -39,9 +39,6 @@ public class MainActivityTest {
     public ActivityScenarioRule<MainActivity> mMainActivityActivityTestRule =
             new ActivityScenarioRule<MainActivity>(MainActivity.class);
 
-    //reference to MainActivity
-    private MainActivity mMainActivity = null;
-
     //Activity monitor
     Instrumentation.ActivityMonitor mMonitor = getInstrumentation().addMonitor(SearchActivity.class.getName(), null, false);
     private Object swipeUp;
@@ -53,7 +50,6 @@ public class MainActivityTest {
     @Test
     public void testLaunchSearchActivityOnButtonActionClicked() {
 
-        assertNotNull(mMainActivity.findViewById(R.id.action_search));
         //perform click on btn using espresso(UI)
         onView(withId(R.id.action_search)).perform(click());
 
