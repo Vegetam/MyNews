@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
 import com.francescomalagrino.mynews.Controllers.Activities.MainActivity;
+import com.francescomalagrino.mynews.Controllers.Activities.SearchActivity;
 import com.francescomalagrino.mynews.Controllers.Activities.WelcomeActivity;
 import com.francescomalagrino.mynews.R;
 import org.junit.After;
@@ -32,28 +33,24 @@ public class WelcomeActivityTest {
     public ActivityScenarioRule<WelcomeActivity> mWelcomeActivityActivityTestRule =
             new ActivityScenarioRule<WelcomeActivity>(WelcomeActivity.class);
 
-    //reference to welcomeActivity
-    private WelcomeActivity mWelcomeActivity = null;
+
     //Activity monitor
     Instrumentation.ActivityMonitor mMonitor = getInstrumentation().addMonitor(MainActivity.class.getName(), null, false);
 
-
+/*
     @Test
     public void testLaunchMainActivityOnButtonClicked() {
 
-        assertNotNull(mWelcomeActivity.findViewById(R.id.start_btn));
         //perform click on btn using espresso(UI)
         onView(withId(R.id.start_btn)).perform(click());
+
 
         //timeOut in milliseconds
         Activity mainActivity = getInstrumentation().waitForMonitorWithTimeout(mMonitor, 5000);
         assertNotNull(mainActivity);
-        // mainActivity.finish();
+        mainActivity.finish();
 
     }
+*/
 
-    @After
-    public void tearDown() throws Exception {
-        mWelcomeActivity = null;
-    }
 }

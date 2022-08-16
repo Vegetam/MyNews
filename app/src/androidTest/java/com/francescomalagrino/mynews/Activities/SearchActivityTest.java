@@ -46,18 +46,9 @@ public class SearchActivityTest {
 
 
     //reference to welcomeActivity
-    private SearchActivity mSearchActivity = null;
     //Activity monitor
     Instrumentation.ActivityMonitor mMonitor = getInstrumentation().addMonitor(NYSearchResultActivity.class.getName(), null, false);
-    private CheckBox cb_arts;
-    private CheckBox cb_politics;
-    private CheckBox cb_business;
-    private CheckBox cb_sports;
-    private CheckBox cb_entrepreneurs;
-    private CheckBox cb_travel;
-    private View endDateButton;
-    private View beginDateButton;
-    private EditText textInputEditText;
+
 
 
     @Test

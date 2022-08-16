@@ -64,11 +64,13 @@ public class MainActivityTest {
     //Test TabLayout Display
     // --------------------------------
 
+    /*
     @Test
     public void testMyCoolTabLayoutIsDisplayed() {
         onView(withId(R.id.tab_layout))
-                .perform(click())
-                .check(matches(isDisplayed()));
+                .perform(click()).check(matches(isDisplayed()));
+       // Activity clickActivity = getInstrumentation().waitForMonitorWithTimeout(mMonitor, 5000);
+        //assertNotNull(clickActivity);
     }
 
 
@@ -89,5 +91,7 @@ public class MainActivityTest {
 
 
     }
+
+     */
 
 }
