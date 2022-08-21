@@ -52,20 +52,6 @@ public class SearchActivityTest {
 
 
     @Test
-    public void testLaunchNYSearchResultActivityOnButtonClicked() {
-
-    //    assertNotNull(mSearchActivity.findViewById(R.id.searchButton));
-        //perform click on btn using espresso(UI)
-        onView(withId(R.id.searchButton)).perform(click());
-
-        //timeOut in milliseconds
-        Activity nYSearchResultActivity = getInstrumentation().waitForMonitorWithTimeout(mMonitor, 5000);
-        assertNotNull(nYSearchResultActivity);
-        nYSearchResultActivity.finish();
-
-    }
-
-    @Test
     public void testViewsDisplayOnActivity() {
         onView(withId(R.id.editTextSearch)).check(matches(isDisplayed()));
 
@@ -96,11 +82,7 @@ public class SearchActivityTest {
         onView(withId(R.id.entrepreneursCB)).perform(click());
          onView(withId(R.id.travelCB)).perform(click());
 
-        // ------------------------------------------------------------------------------------
-        // SearchEditText Writing Hello Search Test from Belgium StayHome StaySafe on the EditText
-        // -----------------------------------------------------------------------------------
-
-        onView(withId(R.id.editTextSearch))
+                onView(withId(R.id.editTextSearch))
                 .perform(typeText("Hello Search Test from Italy StayHome StaySafe"))
                 .check(matches(isDisplayed()));
 
@@ -129,20 +111,5 @@ public class SearchActivityTest {
 
     }
 
-    @Test
-    public void testBeginDateInDatePicker() {
-        // Show the date picker
-        onView(withId(R.id.editTextBeginDate)).perform(click());
-        // Sets a date on the date picker widget
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
-    }
-
-    @Test
-    public void testEndDateInDatePicker() {
-        // Show the date picker
-        onView(withId(R.id.editTextEndDate)).perform(click());
-        // Sets a date on the date picker widget
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
-    }
 
 }
