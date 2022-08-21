@@ -62,8 +62,7 @@ public class SearchActivityTest {
         onView(withId(R.id.politicsCB)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.businessCB)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.sportsCB)).perform(click()).check(matches(isDisplayed()));
-                onView(withId(R.id.travelCB)).perform(click()).check(matches(isDisplayed()));
-    }
+                    }
 
     @Test
     public void testViewsCheckable() {
@@ -78,7 +77,6 @@ public class SearchActivityTest {
        onView(withId(R.id.businessCB)).perform(click());
         onView(withId(R.id.politicsCB)).perform(click());
          onView(withId(R.id.sportsCB)).perform(click());
-         onView(withId(R.id.travelCB)).perform(click());
 
                 onView(withId(R.id.editTextSearch))
                 .perform(typeText("Hello Search Test from Italy StayHome StaySafe"))
@@ -92,7 +90,6 @@ public class SearchActivityTest {
         onView(withId(R.id.artsCB)).check(matches(isChecked()));
         onView(withId(R.id.businessCB)).check(matches(isDisplayed()));
         onView(withId(R.id.sportsCB)).check(matches(isDisplayed()));
-        onView(withId(R.id.travelCB)).check(matches(isDisplayed()));
 
 
         // --------------------------------------------------------------
@@ -103,7 +100,6 @@ public class SearchActivityTest {
          onView(withId(R.id.politicsCB)).perform(click());
          onView(withId(R.id.businessCB)).perform(click());
         onView(withId(R.id.sportsCB)).perform(click());
-        onView(withId(R.id.travelCB)).perform(click());
 
 
     }
