@@ -36,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(AndroidJUnit4.class)
-@LargeTest
 public class SearchActivityTest {
 
 
@@ -52,6 +51,20 @@ public class SearchActivityTest {
 
 
     @Test
+    public void testLaunchNYSearchResultActivityOnButtonClicked() {
+
+    //    assertNotNull(mSearchActivity.findViewById(R.id.searchButton));
+        //perform click on btn using espresso(UI)
+        onView(withId(R.id.searchButton)).perform(click());
+
+        //timeOut in milliseconds
+        Activity nYSearchResultActivity = getInstrumentation().waitForMonitorWithTimeout(mMonitor, 5000);
+        assertNotNull(nYSearchResultActivity);
+        nYSearchResultActivity.finish();
+
+    }
+
+    @Test
     public void testViewsDisplayOnActivity() {
         onView(withId(R.id.editTextSearch)).check(matches(isDisplayed()));
 
@@ -62,7 +75,9 @@ public class SearchActivityTest {
         onView(withId(R.id.politicsCB)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.businessCB)).perform(click()).check(matches(isDisplayed()));
         onView(withId(R.id.sportsCB)).perform(click()).check(matches(isDisplayed()));
-                    }
+        onView(withId(R.id.entrepreneursCB)).perform(click()).check(matches(isDisplayed()));
+        onView(withId(R.id.travelCB)).perform(click()).check(matches(isDisplayed()));
+    }
 
     @Test
     public void testViewsCheckable() {
@@ -77,8 +92,14 @@ public class SearchActivityTest {
        onView(withId(R.id.businessCB)).perform(click());
         onView(withId(R.id.politicsCB)).perform(click());
          onView(withId(R.id.sportsCB)).perform(click());
+       // onView(withId(R.id.entrepreneursCB)).perform(click());
+         onView(withId(R.id.travelCB)).perform(click());
 
-                onView(withId(R.id.editTextSearch))
+        // ------------------------------------------------------------------------------------
+        // SearchEditText Writing Hello Search Test from Belgium StayHome StaySafe on the EditText
+        // -----------------------------------------------------------------------------------
+
+        onView(withId(R.id.editTextSearch))
                 .perform(typeText("Hello Search Test from Italy StayHome StaySafe"))
                 .check(matches(isDisplayed()));
 
@@ -90,7 +111,8 @@ public class SearchActivityTest {
         onView(withId(R.id.artsCB)).check(matches(isChecked()));
         onView(withId(R.id.businessCB)).check(matches(isDisplayed()));
         onView(withId(R.id.sportsCB)).check(matches(isDisplayed()));
-
+        onView(withId(R.id.entrepreneursCB)).check(matches(isDisplayed()));
+        onView(withId(R.id.travelCB)).check(matches(isDisplayed()));
 
         // --------------------------------------------------------------
         // unChecking the categoriesSelected are checked when clicked
@@ -100,9 +122,29 @@ public class SearchActivityTest {
          onView(withId(R.id.politicsCB)).perform(click());
          onView(withId(R.id.businessCB)).perform(click());
         onView(withId(R.id.sportsCB)).perform(click());
+       onView(withId(R.id.entrepreneursCB)).perform(click());
+        onView(withId(R.id.travelCB)).perform(click());
 
 
     }
 
+    @Test
+    public void testBeginDateInDatePicker() {
+        // Show the date picker
+        onView(withId(R.id.editTextBeginDate)).perform(click());
+        // Sets a date on the date picker widget
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
+        onView(withId(android.R.id.button1)).perform(click());
+    }
+
+    @Test
+    public void testEndDateInDatePicker() {
+        // Show the date picker
+        onView(withId(R.id.editTextEndDate)).perform(click());
+        // Sets a date on the date picker widget
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2022, 11, 27));
+        onView(withId(android.R.id.button1)).perform(click());
+
+    }
 
 }
